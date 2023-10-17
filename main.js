@@ -3,8 +3,34 @@ const EMPTY_HEART = '♡'
 const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
+  
+document.addEventListener('DOMContentLoaded', () => {
 
+  //Hide Error modal by toggling .hidden class
+  const errModal = document.querySelector('#modal')
+  
+  //Var to hold all like-glyphs
+  const allHearts = document.querySelectorAll('.like-glyph')
+  
+  //For each like-glyph, add an event listener.
+  //NOTE: The event listener can't be added to a collection, only on an individual element at a time
+  allHearts.forEach(heart => heart.addEventListener('click', (event)=>{
+    mimicServerCall()
+      .then((res) => {
+        console.log(res)
+        heart.classList.toggle('activated-heart')
+      })
+      
+      .catch((err) => {
+        console.log(err)
+        errModal.classList.toggle('hidden')
+        setTimeout(()=>{
+          errModal.classList.toggle('hidden')
+        }, 3000)
+      })
+  }))
 
+})
 
 
 //------------------------------------------------------------------------------
